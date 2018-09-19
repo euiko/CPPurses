@@ -1,5 +1,5 @@
 dist: trusty
-sudo: false
+sudo: true
 language: cpp
 
 addons:
@@ -58,9 +58,15 @@ matrix:
 before_install:
     - eval "${MATRIX_EVAL}"
 
+after_install:
+    - cd /usr/src/gtest && sudo cmake CMakeLists.txt && sudo make && sudo cp *.a /usr/lib
+
 script:
     - mkdir build && cd build
     - cmake ..
     - cmake --build . --target demos
     - cmake --build . --target tests
     - ctest
+
+notifications:
+    email: false
