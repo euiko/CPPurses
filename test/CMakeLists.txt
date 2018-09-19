@@ -1,11 +1,12 @@
 # FIND GTEST
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 find_package(GTest REQUIRED)
+find_package(Threads)
 add_library(gtest INTERFACE IMPORTED)
 set_property(TARGET gtest PROPERTY
     INTERFACE_INCLUDE_DIRECTORIES ${GTEST_INCLUDE_DIRS})
 set_property(TARGET gtest PROPERTY
-    INTERFACE_LINK_LIBRARIES ${GTEST_BOTH_LIBRARIES})
+    INTERFACE_LINK_LIBRARIES ${GTEST_BOTH_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 
 # GATHER SOURCES
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -39,9 +40,14 @@ target_link_libraries(test_cppurses_system PRIVATE libcppurses gtest)
 target_link_libraries(test_cppurses_widget PRIVATE libcppurses gtest)
 target_link_libraries(test_cppurses_painter PRIVATE libcppurses gtest)
 
-target_compile_features(test_cppurses_system PRIVATE cxx_std_14)
-target_compile_features(test_cppurses_widget PRIVATE cxx_std_14)
-target_compile_features(test_cppurses_painter PRIVATE cxx_std_14)
+if(${CMAKE_MAJOR_VERSION} VERSION_LESS "3.8")
+    set(CMAKE_CXX_STANDARD 14)
+else()
+    target_compile_features(test_cppurses_system PRIVATE cxx_std_14)
+    target_compile_features(test_cppurses_widget PRIVATE cxx_std_14)
+    target_compile_features(test_cppurses_painter PRIVATE cxx_std_14)
+endif()
+
 
 add_custom_target(tests
     DEPENDS
