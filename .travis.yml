@@ -7,6 +7,7 @@ addons:
     update: true
     packages:
         - ncurses-dev
+        - libgtest-dev
 
 matrix:
   include:
