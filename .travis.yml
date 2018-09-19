@@ -58,7 +58,7 @@ matrix:
 before_install:
     - eval "${MATRIX_EVAL}"
 
-after_install:
+before_script:
     - cd /usr/src/gtest && sudo cmake CMakeLists.txt && sudo make && sudo cp *.a /usr/lib
 
 script:
