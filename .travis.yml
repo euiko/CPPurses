@@ -57,10 +57,12 @@ matrix:
 before_install:
     - eval "${MATRIX_EVAL}"
     - sudo apt-get install libgtest-dev
+    - CPPURSES_SOURCE_DIR=$(pwd)
     - cd /usr/src/gtest
     - sudo env "PATH=$PATH" cmake CMakeLists.txt
     - sudo make
     - sudo cp *.a /usr/lib
+    - cd ${CPPURSES_SOURCE_DIR}
 
 script:
     - mkdir build && cd build
