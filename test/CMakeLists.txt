@@ -40,7 +40,7 @@ target_link_libraries(test_cppurses_system PRIVATE libcppurses gtest)
 target_link_libraries(test_cppurses_widget PRIVATE libcppurses gtest)
 target_link_libraries(test_cppurses_painter PRIVATE libcppurses gtest)
 
-if(${CMAKE_MAJOR_VERSION} VERSION_LESS "3.8")
+if(${CMAKE_VERSION} VERSION_LESS "3.8")
     set(CMAKE_CXX_STANDARD 14)
 else()
     target_compile_features(test_cppurses_system PRIVATE cxx_std_14)
