@@ -69,9 +69,10 @@ before_install:
 
 script:
     - mkdir build && cd build
-    - cmake ..
-    - cmake --build . --target demos
-    - cmake --build . --target tests
+    - cmake --version
+    - cmake -DCMAKE_BUILD_TYPE=Release..
+    - cmake --build . --target demos -- -n
+    - cmake --build . --target tests -- -n
     - ctest
 
 notifications:
